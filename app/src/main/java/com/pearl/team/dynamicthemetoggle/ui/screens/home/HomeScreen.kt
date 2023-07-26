@@ -89,7 +89,7 @@ fun HomeScreen(
                     .height(backgroundSizeAnimation.dp)
                     .clip(RoundedCornerShape(cornerShapeAnimation))
                     .background(MaterialTheme.colorScheme.background)
-            ) {
+            ) {}
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -122,5 +122,5 @@ fun HomeScreen(
                 }
 
             }
-        }
+
     }
