@@ -1,4 +1,4 @@
-package com.pearl.team.dynamicthemetoggle
+package com.pearl.team.dynamicthemetoggle.ui.Composable
 
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.animateDpAsState
@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-
+import com.pearl.team.dynamicthemetoggle.R
 
 
 @Composable
