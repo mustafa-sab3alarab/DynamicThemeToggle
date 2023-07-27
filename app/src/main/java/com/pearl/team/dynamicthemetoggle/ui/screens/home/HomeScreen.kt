@@ -11,6 +11,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.animation.with
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -82,11 +83,11 @@ fun BackgroundAnimation(
             fadeIn(
                 initialAlpha = 0f,
                 animationSpec = tween(100)
-            ) with fadeOut(
+            ) togetherWith fadeOut(
                 targetAlpha = .9f,
                 animationSpec = tween(800)
             ) + scaleOut(
-                targetScale = .95f,
+                targetScale = 1f,
                 animationSpec = tween(800)
             )
         },
