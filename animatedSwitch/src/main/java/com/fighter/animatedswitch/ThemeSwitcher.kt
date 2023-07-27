@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ThemeSwitcher(
+    modifier: Modifier = Modifier,
     darkTheme: Boolean = false,
     size: Dp = 64.dp,
     iconSize: Dp = size / 3,
@@ -44,7 +45,7 @@ fun ThemeSwitcher(
         animationSpec = animationSpec, label = ""
     )
 
-    Box(modifier = Modifier
+    Box(modifier = modifier
         .width(size * 2)
         .height(size)
         .clip(shape = parentShape)

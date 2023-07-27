@@ -72,7 +72,7 @@ fun DetailsContent() {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .background(color = MaterialTheme.colorScheme.background)
+            .background(color = MaterialTheme.colorScheme.secondaryContainer)
     )
     {
 
