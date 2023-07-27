@@ -54,15 +54,11 @@ import com.pearl.team.dynamicthemetoggle.ui.utils.Constants
 fun HomeScreen(
     darkTheme: Boolean = false,
     onThemeUpdated: () -> Unit,
-    initBackgroundSize: Int = 40,
 ) {
 
     val navController = LocalNavController.current
-    val screenSize = getScreenSize(LocalConfiguration.current)
 
     BackgroundAnimation(
-        backgroundSize = initBackgroundSize,
-        screenSize = screenSize.second,
         darkTheme = darkTheme,
         onThemeUpdated = onThemeUpdated,
     ) {
@@ -75,23 +71,11 @@ fun HomeScreen(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BackgroundAnimation(
-    backgroundSize: Int,
-    screenSize: Dp,
     darkTheme: Boolean,
     onThemeUpdated: () -> Unit,
     content: @Composable () -> Unit
 ) {
 
-//    val backgroundSizeAnimation by animateDpAsState(
-//        targetValue = if (darkTheme) screenSize + 64.dp else 0.dp,
-//        label = "",
-//        animationSpec = tween(300)
-//    )
-//
-//    val cornerShapeAnimation by animateDpAsState(
-//        targetValue = if (darkTheme) 0.dp else 50.dp,
-//        label = ""
-//    )
     var animationOffset by remember { mutableStateOf(Offset(0f, 0f)) }
     AnimatedContent(
         transitionSpec = {
@@ -131,9 +115,8 @@ fun BackgroundAnimation(
                 modifier = Modifier.fillMaxSize(),
                 color = if (currentTheme) Color.Black else Color.White
             ) {
-                Box {
+                Box(modifier = Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.TopCenter) {
                     ThemeSwitcher(
-                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                         size = 40.dp,
                         darkTheme = currentTheme
                     ) {
@@ -182,9 +165,4 @@ fun HomeContent(
         )
     }
 
-}
-
-
-private fun getScreenSize(configuration: Configuration): Pair<Dp, Dp> {
-    return Pair(configuration.screenWidthDp.dp, configuration.screenHeightDp.dp)
 }
