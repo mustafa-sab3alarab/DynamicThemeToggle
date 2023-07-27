@@ -3,8 +3,15 @@ package com.pearl.team.dynamicthemetoggle.ui.screens.home
 import ImageSlider
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.with
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,12 +24,19 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
@@ -58,6 +72,7 @@ fun HomeScreen(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BackgroundAnimation(
     backgroundSize: Int,
@@ -67,34 +82,68 @@ fun BackgroundAnimation(
     content: @Composable () -> Unit
 ) {
 
-    val backgroundSizeAnimation by animateDpAsState(
-        targetValue = if (darkTheme) screenSize + 64.dp else 0.dp,
-        label = "",
-        animationSpec = tween(300)
-    )
-
-    val cornerShapeAnimation by animateDpAsState(
-        targetValue = if (darkTheme) 0.dp else 50.dp,
-        label = ""
-    )
-
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
-
-            Box(
-                Modifier
-                    .width(backgroundSizeAnimation * 2)
-                    .height(backgroundSizeAnimation)
-                    .clip(RoundedCornerShape(cornerShapeAnimation))
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
+//    val backgroundSizeAnimation by animateDpAsState(
+//        targetValue = if (darkTheme) screenSize + 64.dp else 0.dp,
+//        label = "",
+//        animationSpec = tween(300)
+//    )
+//
+//    val cornerShapeAnimation by animateDpAsState(
+//        targetValue = if (darkTheme) 0.dp else 50.dp,
+//        label = ""
+//    )
+    var animationOffset by remember { mutableStateOf(Offset(0f, 0f)) }
+    AnimatedContent(
+        transitionSpec = {
+            fadeIn(
+                initialAlpha = 0f,
+                animationSpec = tween(100)
+            ) with fadeOut(
+                targetAlpha = .9f,
+                animationSpec = tween(800)
+            ) + scaleOut(
+                targetScale = .95f,
+                animationSpec = tween(800)
             )
+        },
+        targetState = darkTheme,
+        modifier = Modifier
+            .background(Color.Black)
+            .fillMaxSize(),
+        label = "",
+    ) { currentTheme ->
+        val revealSize = remember { Animatable(1f) }
+        LaunchedEffect(key1 = "reveal", block = {
+            if (animationOffset.x > 0f) {
+                revealSize.snapTo(0f)
+                revealSize.animateTo(1f, animationSpec = tween(800))
+            } else {
+                revealSize.snapTo(1f)
+            }
+        })
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(CirclePath(revealSize.value, animationOffset))
+        ) {
 
-            ThemeSwitcher(modifier = Modifier.padding(32.dp), size = 40.dp, darkTheme = darkTheme) { onThemeUpdated() }
-
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = if (currentTheme) Color.Black else Color.White
+            ) {
+                Box {
+                    ThemeSwitcher(
+                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                        size = 40.dp,
+                        darkTheme = currentTheme
+                    ) {
+                        animationOffset = it
+                        onThemeUpdated()
+                    }
+                    content()
+                }
+            }
         }
-
-        content()
     }
 }
 

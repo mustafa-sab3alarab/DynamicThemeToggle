@@ -19,10 +19,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -38,24 +42,33 @@ fun ThemeSwitcher(
     parentShape: Shape = CircleShape,
     toggleShape: Shape = CircleShape,
     animationSpec: AnimationSpec<Dp> = tween(durationMillis = 300),
-    onClick: () -> Unit
+    onClick: (Offset) -> Unit
 ) {
-    val offset by animateDpAsState(
+    val animatedOffset by animateDpAsState(
         targetValue = if (darkTheme) 0.dp else size,
         animationSpec = animationSpec, label = ""
     )
 
-    Box(modifier = modifier
+    var offset: Offset = remember { Offset(0f, 0f) }
+
+
+    Box(
+        modifier = Modifier.onGloballyPositioned {
+            offset = Offset(
+                x = it.positionInWindow().x + it.size.width / 2,
+                y = it.positionInWindow().y + it.size.height / 2
+            )
+        }
         .width(size * 2)
         .height(size)
         .clip(shape = parentShape)
-        .clickable { onClick() }
+        .clickable { onClick(offset) }
         .background(MaterialTheme.colorScheme.secondaryContainer)
     ) {
         Box(
             modifier = Modifier
                 .size(size)
-                .offset(x = offset)
+                .offset(x = animatedOffset)
                 .padding(all = padding)
                 .clip(shape = toggleShape)
                 .background(MaterialTheme.colorScheme.primary)
