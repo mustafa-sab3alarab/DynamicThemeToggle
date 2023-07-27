@@ -1,11 +1,10 @@
 package com.pearl.team.dynamicthemetoggle
-import android.content.res.Resources.Theme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.donat.ui.screens.details.detailsScreenRoute
+import com.pearl.team.dynamicthemetoggle.ui.screens.details.detailsScreenRoute
 import com.donat.ui.screens.home.homeScreenRoute
 
 private const val START_DESTINATION ="home"

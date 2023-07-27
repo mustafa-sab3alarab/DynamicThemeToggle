@@ -72,9 +72,9 @@ fun ThemeSwitcher(
                 .padding(all = padding)
                 .clip(shape = toggleShape)
                 .background(MaterialTheme.colorScheme.primary)
-        ) {}
+        )
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .border(
                     border = BorderStroke(
                         width = borderWidth,

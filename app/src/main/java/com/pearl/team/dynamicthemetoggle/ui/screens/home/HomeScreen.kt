@@ -2,28 +2,21 @@ package com.pearl.team.dynamicthemetoggle.ui.screens.home
 
 import ImageSlider
 import android.annotation.SuppressLint
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.animation.with
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -38,12 +31,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.donat.ui.screens.details.toDetails
+import com.pearl.team.dynamicthemetoggle.ui.screens.details.toDetails
 import com.fighter.animatedswitch.ThemeSwitcher
 import com.pearl.team.dynamicthemetoggle.LocalNavController
 import com.pearl.team.dynamicthemetoggle.R
@@ -69,7 +60,6 @@ fun HomeScreen(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BackgroundAnimation(
     darkTheme: Boolean,
