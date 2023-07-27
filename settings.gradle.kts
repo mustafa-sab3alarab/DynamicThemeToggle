@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "DynamicThemeToggle"
 include(":app")
- 
+include(":animatedSwitch")

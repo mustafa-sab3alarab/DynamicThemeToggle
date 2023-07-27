@@ -33,22 +33,22 @@ fun ImageSlider(
         pageSpacing = 16.dp,
         contentPadding = PaddingValues(horizontal = 32.dp, vertical = 32.dp),
 
-    ) {
-            val animatedScale by animateFloatAsState(
-                targetValue = if (it == pagerState.currentPage) 1f else 0.8f,
-                animationSpec = tween(durationMillis = 400)
-            )
+        ) {
+        val animatedScale by animateFloatAsState(
+            targetValue = if (it == pagerState.currentPage) 1f else 0.8f,
+            animationSpec = tween(durationMillis = 400), label = ""
+        )
         Image(
-                painter = painterResource(id = imageList[it % imageList.size]),
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .aspectRatio(3 / 4f)
-                    .scale(scaleY = animatedScale, scaleX = 1f)
-                    .clip(MaterialTheme.shapes.extraLarge)
-                    .clickable { onClick() }
-            )
-        }
+            painter = painterResource(id = imageList[it % imageList.size]),
+            contentDescription = "",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .aspectRatio(3 / 4f)
+                .scale(scaleY = animatedScale, scaleX = 1f)
+                .clip(MaterialTheme.shapes.extraLarge)
+                .clickable { onClick() }
+        )
+    }
 
 
 }

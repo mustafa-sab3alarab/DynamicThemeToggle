@@ -40,8 +40,8 @@ import com.pearl.team.dynamicthemetoggle.ui.theme.Typography
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DetailsScreen(){
-    val navController=  LocalNavController.current
+fun DetailsScreen() {
+    val navController = LocalNavController.current
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
@@ -49,61 +49,65 @@ fun DetailsScreen(){
                 title = {
                 },
                 navigationIcon = {
-                                 Icon(painter = painterResource(R.drawable.baseline_arrow_back_24),
-                                     contentDescription ="", modifier = Modifier
-                                         .padding(4.dp)
-                                         .clickable { navController.onBack() },
-                                     tint = MaterialTheme.colorScheme.primary)
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_arrow_back_24),
+                        contentDescription = "", modifier = Modifier
+                            .padding(4.dp)
+                            .clickable { navController.onBack() },
+                        tint = MaterialTheme.colorScheme.primary
+                    )
                 },
-                colors= TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.background),
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.background),
             )
         },
     ) {
-            DetailsContent()
+        DetailsContent()
     }
 
 }
 
 @Composable
-fun DetailsContent(){
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())
-        .background(color = MaterialTheme.colorScheme.background)
-            )
-        {
+fun DetailsContent() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .background(color = MaterialTheme.colorScheme.background)
+    )
+    {
 
-                Image(
-                    painter = painterResource(id = R.drawable.food_1),
-                    contentDescription = stringResource(R.string.cover),
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .height(300.dp)
-                        .scale(1.6f)
-                        .padding(top = 85.dp),
-                )
-            Spacer(modifier =Modifier.height(90.dp))
-                    Text(text = stringResource(R.string.steak_with_vegetables),
-                        style = Typography.titleLarge.copy(color =  MaterialTheme.colorScheme.tertiary),
-                        modifier= Modifier.padding(horizontal = 16.dp , vertical = 8.dp),
-                        color = MaterialTheme.colorScheme.onBackground)
+        Image(
+            painter = painterResource(id = R.drawable.food_1),
+            contentDescription = stringResource(R.string.cover),
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .height(300.dp)
+                .scale(1.6f)
+                .padding(top = 85.dp),
+        )
+        Spacer(modifier = Modifier.height(90.dp))
+        Text(
+            text = stringResource(R.string.steak_with_vegetables),
+            style = Typography.titleLarge.copy(color = MaterialTheme.colorScheme.tertiary),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            color = MaterialTheme.colorScheme.onBackground
+        )
 
-                    Text(text = stringResource(R.string.introducing_cosmic_bbq_blast_a_mind_blowing_recipe_that_will_send_your_taste_buds_on_an_intergalactic_journey_of_flavors) +
-                            "\n" +
-                            stringResource(R.string.prepare_to_be_whisked_away_to_a_taste_dimension_beyond_your_wildest_dreams_imagine_succulent_out_of_this_world_bbq_burgers_oozing_with_melting_cheese_topped_with_a_meteor_shower_of_crispy_bacon_bits_and_interstellar_onion_rings)
-                          ,
-                        style = Typography.labelLarge.copy(color =  MaterialTheme.colorScheme.tertiary),
-                        modifier= Modifier.padding(horizontal = 16.dp , vertical = 8.dp),
-                        lineHeight = 24.sp)
-                }
+        Text(
+            text = stringResource(R.string.introducing_cosmic_bbq_blast_a_mind_blowing_recipe_that_will_send_your_taste_buds_on_an_intergalactic_journey_of_flavors) +
+                    "\n" +
+                    stringResource(R.string.prepare_to_be_whisked_away_to_a_taste_dimension_beyond_your_wildest_dreams_imagine_succulent_out_of_this_world_bbq_burgers_oozing_with_melting_cheese_topped_with_a_meteor_shower_of_crispy_bacon_bits_and_interstellar_onion_rings),
+            style = Typography.labelLarge.copy(color = MaterialTheme.colorScheme.tertiary),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            lineHeight = 24.sp
+        )
+    }
 
 }
 
 
-
-
 @Preview
 @Composable
-fun DetailsScreenPrev(){
+fun DetailsScreenPrev() {
     DetailsScreen()
 }

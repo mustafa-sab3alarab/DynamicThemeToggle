@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.donat.ui.screens.details.toDetails
+import com.fighter.animatedswitch.ThemeSwitcher
 import com.pearl.team.dynamicthemetoggle.LocalNavController
 import com.pearl.team.dynamicthemetoggle.R
 import com.pearl.team.dynamicthemetoggle.ui.Composable.Appbar
@@ -44,7 +45,7 @@ fun HomeScreen(
     onThemeUpdated: () -> Unit,
     backgroundSize: Float = 64f,
 ) {
-    val navController=  LocalNavController.current
+    val navController = LocalNavController.current
     val backgroundSizeAnimation by animateFloatAsState(
         targetValue = if (darkTheme) 1000f else backgroundSize,
         label = "",
@@ -55,72 +56,78 @@ fun HomeScreen(
         targetValue = if (darkTheme) 0.dp else 50.dp,
         label = ""
     )
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        topBar = {
-            Appbar(title = "FoodEasy",
-                darkTheme=darkTheme,
-                onThemeUpdated = {onThemeUpdated()})
-        },
-    ) {
+//    Scaffold(
+//        containerColor = MaterialTheme.colorScheme.background,
+//        topBar = {
+//            Appbar(title = "FoodEasy",
+//                darkTheme=darkTheme,
+//                onThemeUpdated = {onThemeUpdated()})
+//        },
+//    ) {
 
-        homeContent(
-            backgroundSizeAnimation = backgroundSizeAnimation,
-            cornerShapeAnimation = cornerShapeAnimation,
-            onGoDetails = {navController.toDetails()}
-        )
-    }
+    homeContent(
+        backgroundSizeAnimation = backgroundSizeAnimation,
+        cornerShapeAnimation = cornerShapeAnimation,
+        onGoDetails = { navController.toDetails() },
+        onThemeUpdated = onThemeUpdated,
+        darkTheme = darkTheme
+    )
+//    }
 
 }
 
-    @OptIn(ExperimentalFoundationApi::class,)
-    @Composable
-    fun homeContent(
-        backgroundSizeAnimation: Float,
-        cornerShapeAnimation: Dp,
-        onGoDetails: () -> Unit
-    ){
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun homeContent(
+    backgroundSizeAnimation: Float,
+    cornerShapeAnimation: Dp,
+    onGoDetails: () -> Unit,
+    darkTheme: Boolean,
+    onThemeUpdated: () -> Unit
+) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+    ) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            Modifier
+                .width(backgroundSizeAnimation.dp * 2)
+                .height(backgroundSizeAnimation.dp)
+                .clip(RoundedCornerShape(cornerShapeAnimation))
+                .background(MaterialTheme.colorScheme.background)
+        ) {}
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
-                Modifier
-                    .width(backgroundSizeAnimation.dp * 2)
-                    .height(backgroundSizeAnimation.dp)
-                    .clip(RoundedCornerShape(cornerShapeAnimation))
-                    .background(MaterialTheme.colorScheme.background)
-            ) {}
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 50.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+            ThemeSwitcher(size = 40.dp, darkTheme = darkTheme) { onThemeUpdated() }
+
+            ImageSlider(imageList = Constants.imageList,
+                pagerState = rememberPagerState(
+                    initialPage = 0,
+                    initialPageOffsetFraction = 0f
                 ) {
-                    ImageSlider(imageList = Constants.imageList,
-                        pagerState = rememberPagerState(
-                            initialPage = 0,
-                            initialPageOffsetFraction = 0f
-                        ) {
-                            Constants.imageList.size
-                        }, onClick = {
-                            onGoDetails()
-                        })
+                    Constants.imageList.size
+                }, onClick = {
+                    onGoDetails()
+                })
 
-                    Text(
-                        text = stringResource(R.string.foodeasy),
-                        style = Typography.titleLarge.copy(color = MaterialTheme.colorScheme.tertiary),
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
+            Text(
+                text = stringResource(R.string.foodeasy),
+                style = Typography.titleLarge.copy(color = MaterialTheme.colorScheme.tertiary),
+                color = MaterialTheme.colorScheme.onBackground
+            )
 
-                    Text(
-                        text = stringResource(R.string.as_the_rich_aroma_of_freshly_baked_chocolate_chip_cookies_fills_the_air_all_worries_melt_away_and_a_warm_hug_from_the_oven_embraces_your_soul_with_sheer_delight),
-                        style = Typography.labelLarge.copy(color = MaterialTheme.colorScheme.tertiary),
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                        lineHeight = 24.sp,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                }
-
-            }
+            Text(
+                text = stringResource(R.string.as_the_rich_aroma_of_freshly_baked_chocolate_chip_cookies_fills_the_air_all_worries_melt_away_and_a_warm_hug_from_the_oven_embraces_your_soul_with_sheer_delight),
+                style = Typography.labelLarge.copy(color = MaterialTheme.colorScheme.tertiary),
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                lineHeight = 24.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        }
 
     }
+
+}

@@ -9,7 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.pearl.team.dynamicthemetoggle.ui.screens.home.HomeScreen
 import com.pearl.team.dynamicthemetoggle.ui.theme.DynamicThemeToggleTheme
 
 class MainActivity : ComponentActivity() {
