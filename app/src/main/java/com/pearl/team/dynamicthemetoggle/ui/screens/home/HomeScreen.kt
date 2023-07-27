@@ -114,7 +114,7 @@ fun BackgroundAnimation(
 
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = if (currentTheme) Color.Black else Color.White
+                color =  MaterialTheme.colorScheme.secondaryContainer
             ) {
                 Box(modifier = Modifier.fillMaxWidth().padding(top = 16.dp), contentAlignment = Alignment.TopCenter) {
                     ThemeSwitcher(
